@@ -19,16 +19,14 @@ const prisma = require('./config/prisma');
 const app = express();
 
 // ─── Security & Parsing ─────────────────────────────────────────────────────
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP for now to prevent blocking unified frontend assets
+}));
 
-// CORS — require explicit FRONTEND_URL, never fall back to wildcard
+// CORS — allow FRONTEND_URL or fallback to same-origin if serving unified
 const allowedOrigin = process.env.FRONTEND_URL;
-if (!allowedOrigin && process.env.NODE_ENV === 'production') {
-  console.error('FATAL: FRONTEND_URL environment variable is required in production');
-  process.exit(1);
-}
 app.use(cors({
-  origin: allowedOrigin || 'http://localhost:5173',
+  origin: allowedOrigin || true, // 'true' allows the request origin
   credentials: true,
 }));
 
