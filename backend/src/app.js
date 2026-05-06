@@ -96,8 +96,9 @@ app.use('/api/projects/:projectId/tasks', taskRoutes);
 app.use('/api/projects/:projectId/activity', activityRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-// Health check
+// Health check & Root
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+app.get('/', (req, res) => res.json({ status: 'ok', message: 'TaskFlow API is running' }));
 
 // 404 for API routes
 app.use('/api', (req, res) => res.status(404).json({ success: false, message: 'API Route not found' }));
