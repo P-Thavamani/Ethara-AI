@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ctrl = require('../controllers/project.controller');
 const { authenticate } = require('../middlewares/auth.middleware');
 const { requireProjectAdmin, requireProjectMember } = require('../middlewares/rbac.middleware');
-const { projectRules, memberRoleRules, handleValidation } = require('../validators/project.validator');
+const { projectRules, memberRoleRules, addMemberRules, handleValidation } = require('../validators/project.validator');
 
 router.use(authenticate);
 
@@ -14,7 +14,7 @@ router.put('/:projectId', requireProjectAdmin, projectRules, handleValidation, c
 router.delete('/:projectId', requireProjectAdmin, ctrl.deleteProject);
 
 // Member management (admin only)
-router.post('/:projectId/members', requireProjectAdmin, ctrl.addMember);
+router.post('/:projectId/members', requireProjectAdmin, addMemberRules, handleValidation, ctrl.addMember);
 router.delete('/:projectId/members/:memberId', requireProjectAdmin, ctrl.removeMember);
 router.patch('/:projectId/members/:memberId/role', requireProjectAdmin, memberRoleRules, handleValidation, ctrl.updateMemberRole);
 
