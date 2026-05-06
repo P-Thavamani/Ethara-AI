@@ -99,8 +99,20 @@ app.use('/api/dashboard', dashboardRoutes);
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
-// 404
-app.use((req, res) => res.status(404).json({ success: false, message: 'Route not found' }));
+// 404 for API routes
+app.use('/api/*', (req, res) => res.status(404).json({ success: false, message: 'API Route not found' }));
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const path = require('path');
+  const frontendPath = path.join(__dirname, '../../frontend/dist');
+  app.use(express.static(frontendPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+} else {
+  app.use((req, res) => res.status(404).json({ success: false, message: 'Route not found' }));
+}
 
 // Global error handler
 app.use(errorHandler);
