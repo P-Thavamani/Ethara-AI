@@ -100,7 +100,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
 // 404 for API routes
-app.use('/api/*', (req, res) => res.status(404).json({ success: false, message: 'API Route not found' }));
+app.use('/api', (req, res) => res.status(404).json({ success: false, message: 'API Route not found' }));
 
 // Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
