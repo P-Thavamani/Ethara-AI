@@ -12,9 +12,4 @@ const memberRoleRules = [
     .isIn(['ADMIN', 'MEMBER']).withMessage('Role must be ADMIN or MEMBER'),
 ];
 
-const addMemberRules = [
-  body('email').isEmail().withMessage('Valid email required').normalizeEmail({ gmail_remove_dots: false }),
-  body('role').optional().isIn(['ADMIN', 'MEMBER']).withMessage('Role must be ADMIN or MEMBER'),
-];
-
-module.exports = { projectRules, memberRoleRules, addMemberRules, handleValidation };
+module.exports = { projectRules, memberRoleRules, handleValidation };
