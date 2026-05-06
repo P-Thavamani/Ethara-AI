@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { CheckSquare, AlertCircle, Clock, Layers } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { getDashboard } from '../services/dashboard.service';
+import { cachedFetch } from '../utils/cache.util';
 import StatCard from '../components/dashboard/StatCard';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
 import TaskCard from '../components/tasks/TaskCard';
@@ -66,13 +67,27 @@ const DashboardSkeleton = () => (
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getDashboard()
-      .then((res) => setData(res.data.data))
-      .catch(() => toast.error('Failed to load dashboard'))
-      .finally(() => setLoading(false));
+    cachedFetch(
+      'dashboard',
+      () => getDashboard().then((res) => res.data.data),
+      (freshData, isStale) => {
+        setData(freshData);
+        if (isStale) {
+          setLoading(false);   // show stale data instantly
+          setRefreshing(true); // show subtle indicator
+        } else {
+          setLoading(false);
+          setRefreshing(false);
+        }
+      }
+    ).catch(() => {
+      toast.error('Failed to load dashboard');
+      setLoading(false);
+    });
   }, []);
 
   if (loading) return <DashboardSkeleton />;
@@ -91,7 +106,14 @@ const Dashboard = () => {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Dashboard</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <h1 className={styles.title}>Dashboard</h1>
+          {refreshing && (
+            <span style={{ fontSize: '11px', color: '#6b7280', background: '#1e1e28', border: '1px solid #2a2a35', borderRadius: '20px', padding: '2px 8px' }}>
+              Syncing...
+            </span>
+          )}
+        </div>
         <p className={styles.sub}>Here's what's happening across your projects</p>
       </div>
 

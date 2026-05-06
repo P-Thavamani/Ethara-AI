@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import * as projectService from '../services/project.service';
+import { cachedFetch, cacheDelete } from '../utils/cache.util';
 
 const useProjectStore = create((set, get) => ({
   projects: [],
@@ -10,8 +11,11 @@ const useProjectStore = create((set, get) => ({
   fetchProjects: async () => {
     set({ isLoading: true, error: null });
     try {
-      const res = await projectService.getProjects();
-      set({ projects: res.data.data, isLoading: false });
+      await cachedFetch(
+        'projects',
+        () => projectService.getProjects().then((res) => res.data.data),
+        (data) => set({ projects: data, isLoading: false })
+      );
     } catch (err) {
       set({ isLoading: false, error: err.response?.data?.message || 'Failed to load projects' });
       throw err;
@@ -33,6 +37,7 @@ const useProjectStore = create((set, get) => ({
   createProject: async (data) => {
     const res = await projectService.createProject(data);
     const project = res.data.data;
+    cacheDelete('projects'); // invalidate so next fetch is fresh
     set((state) => ({ projects: [project, ...state.projects] }));
     return project;
   },
@@ -49,6 +54,7 @@ const useProjectStore = create((set, get) => ({
 
   deleteProject: async (id) => {
     await projectService.deleteProject(id);
+    cacheDelete('projects'); // invalidate cache
     set((state) => ({ projects: state.projects.filter((p) => p.id !== id) }));
   },
 
