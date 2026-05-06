@@ -1,0 +1,100 @@
+.page { max-width: 1200px; }
+
+.loading { color: var(--text-muted); font-size: 13px; padding: 40px; text-align: center; }
+
+.header { margin-bottom: 24px; }
+.title { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.sub { font-size: 13px; color: var(--text-secondary); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .stats { grid-template-columns: 1fr; } }
+
+.progressCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.progressPct { font-weight: 700; color: var(--accent); }
+
+.progressBar {
+  height: 6px;
+  background: var(--bg-hover);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 100px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+
+.right { display: flex; flex-direction: column; gap: 20px; }
+
+.section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.taskList { display: flex; flex-direction: column; gap: 8px; }
+
+.empty { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; }
+
+.workload { display: flex; flex-direction: column; gap: 10px; }
+
+.workloadItem { display: flex; align-items: center; gap: 10px; }
+
+.workloadName { font-size: 12px; color: var(--text-secondary); width: 90px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.workloadBar {
+  flex: 1;
+  height: 5px;
+  background: var(--bg-hover);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.workloadFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+
+.workloadCount { font-size: 11px; color: var(--text-muted); width: 20px; text-align: right; }

@@ -1,0 +1,27 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 100px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.sm { padding: 2px 8px; font-size: 11px; }
+.md { padding: 4px 10px; font-size: 12px; }
+
+/* Status variants */
+.todo { background: rgba(90,90,110,0.2); color: var(--status-todo); }
+.in_progress { background: rgba(59,130,246,0.15); color: var(--status-in-progress); }
+.in_review { background: rgba(168,85,247,0.15); color: var(--status-in-review); }
+.done { background: rgba(34,197,94,0.15); color: var(--status-done); }
+
+/* Priority variants */
+.low { background: rgba(34,197,94,0.15); color: var(--priority-low); }
+.medium { background: rgba(245,158,11,0.15); color: var(--priority-medium); }
+.high { background: rgba(249,115,22,0.15); color: var(--priority-high); }
+.urgent { background: rgba(239,68,68,0.15); color: var(--priority-urgent); }
+
+/* Generic */
+.default { background: var(--bg-hover); color: var(--text-secondary); }
+.accent { background: var(--accent-dim); color: var(--accent); }

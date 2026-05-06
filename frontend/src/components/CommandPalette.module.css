@@ -1,0 +1,90 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+}
+
+.palette {
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.searchIcon { color: var(--text-muted); flex-shrink: 0; }
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+.results { padding: 6px; max-height: 320px; overflow-y: auto; }
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-align: left;
+  transition: background var(--transition);
+}
+
+.item:hover { background: var(--bg-hover); }
+
+.itemIcon { color: var(--text-muted); display: flex; }
+.itemLabel { flex: 1; }
+.itemSub { font-size: 11px; color: var(--text-muted); background: var(--bg-hover); padding: 1px 6px; border-radius: 4px; }
+
+.empty { text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px; }
+
+.item.selected { background: var(--accent-dim); color: var(--accent); }
+.item.selected .itemIcon { color: var(--accent); }
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.footer kbd {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  padding: 0 4px;
+  font-size: 10px;
+  font-family: inherit;
+  margin-right: 2px;
+}

@@ -1,0 +1,36 @@
+.form { display: flex; flex-direction: column; gap: 14px; }
+
+.field { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+
+.label { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+
+.textarea {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  padding: 9px 12px;
+  font-size: 13px;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+.textarea::placeholder { color: var(--text-muted); }
+
+.select {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  padding: 9px 12px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+.select:focus { border-color: var(--accent); }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.actions { display: flex; justify-content: flex-end; padding-top: 4px; }

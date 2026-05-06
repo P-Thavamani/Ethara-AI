@@ -1,0 +1,22 @@
+.feed { display: flex; flex-direction: column; gap: 2px; }
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  transition: background var(--transition);
+}
+
+.item:hover { background: var(--bg-hover); }
+
+.content { flex: 1; min-width: 0; }
+
+.actor { font-weight: 600; color: var(--text-primary); font-size: 12px; }
+.action { color: var(--text-secondary); font-size: 12px; }
+.subject { color: var(--accent); font-size: 12px; }
+
+.time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.empty { text-align: center; color: var(--text-muted); font-size: 13px; padding: 24px 0; }
