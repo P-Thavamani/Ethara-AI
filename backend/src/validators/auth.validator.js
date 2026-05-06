@@ -5,10 +5,10 @@ const signupRules = [
   body('name').trim().notEmpty().withMessage('Name is required').isLength({ min: 2, max: 50 }),
   body('email').isEmail().withMessage('Valid email required').normalizeEmail(),
   body('password')
-    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
-    .matches(/[A-Z]/).withMessage('Password must contain an uppercase letter')
-    .matches(/[a-z]/).withMessage('Password must contain a lowercase letter')
-    .matches(/\d/).withMessage('Password must contain a digit'),
+    .isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+    .matches(/[A-Z]/).withMessage('Password must contain an uppercase letter (A–Z)')
+    .matches(/[a-z]/).withMessage('Password must contain a lowercase letter (a–z)')
+    .matches(/\d/).withMessage('Password must contain a number (0–9)'),
 ];
 
 const loginRules = [
