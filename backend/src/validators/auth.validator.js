@@ -3,7 +3,7 @@ const { handleValidation } = require('../middlewares/validate.middleware');
 
 const signupRules = [
   body('name').trim().notEmpty().withMessage('Name is required').isLength({ min: 2, max: 50 }),
-  body('email').isEmail().withMessage('Valid email required').normalizeEmail(),
+  body('email').isEmail().withMessage('Valid email required'),
   body('password')
     .isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
     .matches(/[A-Z]/).withMessage('Password must contain an uppercase letter (A–Z)')
@@ -12,7 +12,7 @@ const signupRules = [
 ];
 
 const loginRules = [
-  body('email').isEmail().withMessage('Valid email required').normalizeEmail(),
+  body('email').isEmail().withMessage('Valid email required'),
   body('password').notEmpty().withMessage('Password is required'),
 ];
 
