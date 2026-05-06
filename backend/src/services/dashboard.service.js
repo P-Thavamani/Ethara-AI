@@ -20,7 +20,8 @@ const getDashboardStats = async (userId) => {
     prisma.task.count({ where: { projectId: { in: projectIds }, status: 'IN_PROGRESS' } }),
     prisma.task.findMany({
       where: { assigneeId: userId, status: { not: 'DONE' } },
-      include: {
+      select: {
+        id: true, title: true, status: true, priority: true, dueDate: true, projectId: true,
         project: { select: { id: true, name: true } },
         assignee: { select: { id: true, name: true, avatar: true } },
       },
@@ -29,9 +30,13 @@ const getDashboardStats = async (userId) => {
     }),
     prisma.activityLog.findMany({
       where: { projectId: { in: projectIds } },
-      include: { user: { select: { id: true, name: true, avatar: true } }, project: { select: { id: true, name: true } } },
+      select: {
+        id: true, action: true, createdAt: true, meta: true,
+        user: { select: { id: true, name: true, avatar: true } },
+        project: { select: { id: true, name: true } },
+      },
       orderBy: { createdAt: 'desc' },
-      take: 20,
+      take: 10,
     }),
   ]);
 

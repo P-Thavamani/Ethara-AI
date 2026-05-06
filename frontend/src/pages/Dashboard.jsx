@@ -9,6 +9,60 @@ import ActivityFeed from '../components/dashboard/ActivityFeed';
 import TaskCard from '../components/tasks/TaskCard';
 import styles from './Dashboard.module.css';
 
+// ─── Skeleton Loader ────────────────────────────────────────────────────────
+const Skeleton = ({ width = '100%', height = '16px', borderRadius = '6px' }) => (
+  <div
+    style={{
+      width,
+      height,
+      borderRadius,
+      background: 'linear-gradient(90deg, #1e1e28 25%, #25252f 50%, #1e1e28 75%)',
+      backgroundSize: '200% 100%',
+      animation: 'shimmer 1.4s infinite',
+    }}
+  />
+);
+
+const DashboardSkeleton = () => (
+  <div className={styles.page}>
+    <style>{`@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }`}</style>
+    <div className={styles.header}>
+      <Skeleton width="160px" height="28px" />
+      <Skeleton width="280px" height="16px" />
+    </div>
+    <div className={styles.stats}>
+      {[1,2,3,4].map(i => (
+        <div key={i} style={{ padding: '20px', background: '#16161e', borderRadius: '12px', border: '1px solid #2a2a35' }}>
+          <Skeleton width="80px" height="14px" />
+          <div style={{ marginTop: '12px' }}>
+            <Skeleton width="50px" height="32px" />
+          </div>
+        </div>
+      ))}
+    </div>
+    <div className={styles.progressCard}>
+      <Skeleton height="12px" />
+    </div>
+    <div className={styles.grid}>
+      <div className={styles.section}>
+        <Skeleton width="140px" height="20px" />
+        <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {[1,2,3].map(i => <Skeleton key={i} height="72px" borderRadius="10px" />)}
+        </div>
+      </div>
+      <div className={styles.right}>
+        <div className={styles.section}>
+          <Skeleton width="140px" height="20px" />
+          <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {[1,2,3,4,5].map(i => <Skeleton key={i} height="44px" borderRadius="8px" />)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Dashboard Component ─────────────────────────────────────────────────────
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +75,7 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading dashboard...</div>;
+  if (loading) return <DashboardSkeleton />;
   if (!data) return null;
 
   const { stats, myTasks, recentActivity, workload } = data;
@@ -29,13 +83,9 @@ const Dashboard = () => {
     ? Math.round((stats.completedTasks / stats.totalTasks) * 100)
     : 0;
 
-  // Navigate to the task's project when clicked
   const handleTaskClick = (task) => {
-    if (task.project?.id) {
-      navigate(`/projects/${task.project.id}`);
-    } else if (task.projectId) {
-      navigate(`/projects/${task.projectId}`);
-    }
+    if (task.project?.id) navigate(`/projects/${task.project.id}`);
+    else if (task.projectId) navigate(`/projects/${task.projectId}`);
   };
 
   return (
